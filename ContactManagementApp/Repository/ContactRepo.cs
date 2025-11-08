@@ -1,0 +1,61 @@
+﻿using ContactManagementApp.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ContactManagementApp.Repository
+{
+    public class ContactRepo : IContactRepo
+    {
+        private readonly AppDbContext _context;
+
+    
+        public ContactRepo(AppDbContext context)
+        {
+            _context = context;
+        }
+
+       
+        public async Task<Contact> CreateContact(Contact contact)
+        {
+            await _context.Contacts.AddAsync(contact);
+            await _context.SaveChangesAsync();
+            return contact;
+        }
+
+        public async Task<bool> DeleteContact(int id)
+        {
+            var contact = await _context.Contacts.FindAsync(id);
+            if (contact == null)
+                return false;
+
+            _context.Contacts.Remove(contact);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<Contact>> GetAllContacts()
+        {
+            return await _context.Contacts.ToListAsync();
+        }
+
+        public async Task<Contact> GetContactById(int id)
+        {
+            return await _context.Contacts.FindAsync(id);
+        }
+
+        public async Task<Contact> UpdateContact(Contact contact)
+        {
+            var existing = await _context.Contacts.FindAsync(contact.Id);
+            if (existing == null)
+                return null;
+
+            // Update only values, EF Core will track `existing`
+            _context.Entry(existing).CurrentValues.SetValues(contact);
+
+            await _context.SaveChangesAsync();
+            return existing;
+        }
+
+    }
+}
