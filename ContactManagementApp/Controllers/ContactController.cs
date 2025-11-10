@@ -17,7 +17,7 @@ namespace ContactManagementApp.Controllers
             _contactService = contactService;
         }
 
-        // ✅ GET: api/contact/getall
+      
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
@@ -32,12 +32,13 @@ namespace ContactManagementApp.Controllers
             }
         }
 
-        // ✅ GET: api/contact/{id}
+    
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
+                
                 var contact = await _contactService.GetContactByIdAsync(id);
                 if (contact == null)
                     return NotFound($"Contact with ID {id} not found.");
@@ -50,7 +51,7 @@ namespace ContactManagementApp.Controllers
             }
         }
 
-        // ✅ POST: api/contact
+       
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Contact contact)
         {
@@ -68,7 +69,7 @@ namespace ContactManagementApp.Controllers
             }
         }
 
-        // ✅ PUT: api/contact/{id}
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateContact(int id, [FromBody] Contact contact)
         {
@@ -93,7 +94,7 @@ namespace ContactManagementApp.Controllers
             }
         }
 
-        // ✅ DELETE: api/contact/{id}
+     
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

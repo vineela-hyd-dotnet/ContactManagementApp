@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContactManagementApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251108041939_create")]
+    [Migration("20251110051152_create")]
     partial class create
     {
         /// <inheritdoc />
